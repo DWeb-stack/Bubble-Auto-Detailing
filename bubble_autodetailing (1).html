@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUBBLE Auto Detailing & Car Wash | Lawrence, MA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#f8f9fb; color:#111; overflow-x:hidden; }
+
+  nav {
+    background:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem 3rem;
+    border-bottom:1px solid #eee;
+    position:sticky;
+    top:0;
+    z-index:100;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-bubble {
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+  }
+  .logo-text { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; color:#0072ff; }
+  .logo-sub { font-size:10px; color:#888; letter-spacing:3px; text-transform:uppercase; margin-top:-4px; }
+  nav ul { list-style:none; display:flex; gap:2rem; }
+  nav ul a { text-decoration:none; color:#555; font-size:13px; font-weight:500; transition:color .2s; }
+  nav ul a:hover { color:#0072ff; }
+  .nav-cta {
+    background:#0072ff; color:#fff; border:none;
+    padding:10px 24px; border-radius:30px; font-size:13px;
+    font-weight:600; cursor:pointer; font-family:'Inter',sans-serif;
+    transition:background .2s;
+  }
+  .nav-cta:hover { background:#005ce6; }
+
+  .hero {
+    background:linear-gradient(135deg,#0a0a1a 0%,#0d1b3e 50%,#0a0a1a 100%);
+    padding:6rem 3rem;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4rem;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute;
+    width:600px; height:600px;
+    background:radial-gradient(circle,rgba(0,114,255,0.15),transparent 70%);
+    top:-100px; right:-100px;
+    border-radius:50%;
+  }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(0,114,255,0.15);
+    border:1px solid rgba(0,114,255,0.3);
+    color:#60a5fa; font-size:12px; padding:6px 14px;
+    border-radius:20px; margin-bottom:1.5rem; font-weight:500;
+  }
+  .stars { color:#fbbf24; font-size:14px; }
+  .hero h1 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(48px,6vw,80px);
+    line-height:1;
+    color:#fff;
+    letter-spacing:2px;
+    margin-bottom:1.5rem;
+  }
+  .hero h1 span { color:#00c6ff; }
+  .hero p {
+    color:rgba(255,255,255,0.6);
+    font-size:16px;
+    line-height:1.8;
+    margin-bottom:2rem;
+    max-width:440px;
+  }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-blue {
+    background:#0072ff; color:#fff; border:none;
+    padding:14px 32px; border-radius:30px; font-size:14px;
+    font-weight:600; cursor:pointer; font-family:'Inter',sans-serif;
+    transition:transform .15s, background .2s;
+    text-decoration:none; display:inline-block;
+  }
+  .btn-blue:hover { background:#005ce6; transform:translateY(-2px); }
+  .btn-outline {
+    background:transparent; color:#fff;
+    border:1px solid rgba(255,255,255,0.25);
+    padding:14px 32px; border-radius:30px; font-size:14px;
+    cursor:pointer; font-family:'Inter',sans-serif;
+    transition:border-color .2s;
+  }
+  .btn-outline:hover { border-color:#00c6ff; color:#00c6ff; }
+
+  .hero-visual {
+    display:flex; justify-content:center; align-items:center;
+  }
+  .car-card {
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;
+    padding:2rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .car-emoji { font-size:80px; display:block; margin-bottom:1rem; animation:shine 3s ease-in-out infinite; }
+  @keyframes shine {
+    0%,100% { filter:brightness(1); }
+    50% { filter:brightness(1.3) drop-shadow(0 0 20px rgba(0,198,255,0.5)); }
+  }
+  .bubbles { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; overflow:hidden; border-radius:20px; }
+  .bubble {
+    position:absolute;
+    border-radius:50%;
+    background:rgba(0,198,255,0.15);
+    border:1px solid rgba(0,198,255,0.3);
+    animation:floatUp 4s ease-in-out infinite;
+  }
+  .bubble:nth-child(1) { width:16px;height:16px;left:20%;bottom:10%;animation-delay:0s; }
+  .bubble:nth-child(2) { width:10px;height:10px;left:50%;bottom:20%;animation-delay:1s; }
+  .bubble:nth-child(3) { width:20px;height:20px;left:75%;bottom:5%;animation-delay:2s; }
+  .bubble:nth-child(4) { width:8px;height:8px;left:35%;bottom:15%;animation-delay:1.5s; }
+  @keyframes floatUp {
+    0% { transform:translateY(0) scale(1); opacity:0.8; }
+    100% { transform:translateY(-120px) scale(0.5); opacity:0; }
+  }
+  .rating-pill {
+    display:inline-flex; align-items:center; gap:6px;
+    background:#fff; border-radius:30px; padding:8px 16px;
+    font-size:13px; font-weight:600; color:#111; margin-top:1rem;
+    box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .stats {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    background:#fff; border-bottom:1px solid #eee;
+  }
+  .stat { padding:2rem; text-align:center; border-right:1px solid #eee; }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:'Bebas Neue',sans-serif; font-size:42px; color:#0072ff; }
+  .stat-label { font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+
+  .services { padding:5rem 3rem; background:#f8f9fb; }
+  .section-tag { font-size:11px; text-transform:uppercase; letter-spacing:0.2em; color:#0072ff; font-weight:600; margin-bottom:0.5rem; }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:2px; color:#111; margin-bottom:0.5rem; }
+  .section-sub { font-size:15px; color:#666; margin-bottom:3rem; }
+  .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .service-card {
+    background:#fff; border-radius:16px; padding:2rem;
+    border:1px solid #eee; transition:transform .2s, box-shadow .2s, border-color .2s;
+    cursor:pointer;
+  }
+  .service-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,114,255,0.1); border-color:#0072ff; }
+  .service-icon { font-size:32px; margin-bottom:1rem; }
+  .service-card h3 { font-size:17px; font-weight:600; margin-bottom:6px; color:#111; }
+  .service-card p { font-size:13px; color:#777; line-height:1.6; margin-bottom:1rem; }
+  .service-price { font-size:15px; font-weight:700; color:#0072ff; }
+
+  .reviews { padding:5rem 3rem; background:#fff; }
+  .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+  .review-card {
+    background:#f8f9fb; border-radius:16px; padding:1.75rem;
+    border:1px solid #eee;
+  }
+  .review-stars { color:#fbbf24; font-size:14px; margin-bottom:0.75rem; }
+  .review-text { font-size:14px; color:#444; line-height:1.7; margin-bottom:1rem; font-style:italic; }
+  .reviewer { font-size:13px; font-weight:600; color:#111; }
+  .reviewer-sub { font-size:12px; color:#999; }
+
+  .cta-section {
+    background:linear-gradient(135deg,#0072ff,#00c6ff);
+    padding:5rem 3rem;
+    text-align:center;
+  }
+  .cta-section h2 { font-family:'Bebas Neue',sans-serif; font-size:52px; color:#fff; letter-spacing:2px; margin-bottom:1rem; }
+  .cta-section p { color:rgba(255,255,255,0.8); font-size:16px; margin-bottom:2rem; }
+  .cta-info { display:flex; justify-content:center; gap:3rem; margin-top:2.5rem; flex-wrap:wrap; }
+  .cta-info-item { color:rgba(255,255,255,0.9); font-size:14px; display:flex; align-items:center; gap:8px; }
+
+  footer {
+    background:#0a0a1a; color:rgba(255,255,255,0.4);
+    padding:2rem 3rem;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13px; flex-wrap:wrap; gap:1rem;
+  }
+  footer a { color:#0072ff; text-decoration:none; }
+
+  @media(max-width:768px){
+    nav ul { display:none; }
+    nav { padding:1rem 1.5rem; }
+    .hero { grid-template-columns:1fr; padding:3rem 1.5rem; text-align:center; }
+    .hero p { max-width:100%; }
+    .hero-btns { justify-content:center; }
+    .hero-visual { display:none; }
+    .stats { grid-template-columns:1fr; }
+    .stat { border-right:none; border-bottom:1px solid #eee; }
+    .services-grid { grid-template-columns:1fr; }
+    .services, .reviews { padding:3rem 1.5rem; }
+    .reviews-grid { grid-template-columns:1fr; }
+    .cta-section { padding:3rem 1.5rem; }
+    .cta-info { flex-direction:column; align-items:center; gap:1rem; }
+    footer { flex-direction:column; text-align:center; padding:1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-bubble">🫧</div>
+    <div>
+      <div class="logo-text">BUBBLE</div>
+      <div class="logo-sub">Auto Detailing</div>
+    </div>
+  </div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:9788729072" class="nav-cta">Book Now</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-badge"><span class="stars">★★★★★</span> 5.0 Rating · 21 Reviews</div>
+    <h1>Your Car<br>Deserves To<br><span>Shine.</span></h1>
+    <p>Lawrence's top-rated auto detailing service. Interior, exterior, engine bay — we handle it all with precision and care so your ride looks brand new.</p>
+    <div class="hero-btns">
+      <a href="tel:9788729072" class="btn-blue">📞 Call Us Now</a>
+      <a href="#services" class="btn-outline">See Our Services</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="car-card">
+      <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+      </div>
+      <span class="car-emoji">🚗</span>
+      <div style="color:rgba(255,255,255,0.7);font-size:14px;">Professional Results Every Time</div>
+      <div class="rating-pill">⭐ 5.0 · Lawrence, MA</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">5.0</div>
+    <div class="stat-label">Star Rating</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">21+</div>
+    <div class="stat-label">Happy Customers</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Satisfaction</div>
+  </div>
+</div>
+
+<section class="services" id="services">
+  <div class="section-tag">What we offer</div>
+  <div class="section-title">Our Services</div>
+  <div class="section-sub">Professional detailing inside and out — we treat every car like it's our own.</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <h3>Exterior Detail</h3>
+      <p>Full hand wash, clay bar treatment, tire shine, and streak-free windows. Your paint will thank you.</p>
+      <div class="service-price">Starting at $80</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🪑</div>
+      <h3>Interior Detail</h3>
+      <p>Deep vacuum, steam clean, leather conditioning, and odor elimination. Spotless from seat to ceiling.</p>
+      <div class="service-price">Starting at $100</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💎</div>
+      <h3>Full Detail Package</h3>
+      <p>The works — complete interior and exterior, engine bay, headlight restoration, and more.</p>
+      <div class="service-price">Starting at $180</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔆</div>
+      <h3>Headlight Restoration</h3>
+      <p>Foggy headlights cleared up and protected. Improve your visibility and your car's look.</p>
+      <div class="service-price">Starting at $40</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚙</div>
+      <h3>Engine Bay Clean</h3>
+      <p>Safe degreasing and detailing of your engine bay. Looks great, runs cleaner.</p>
+      <div class="service-price">Starting at $60</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🫧</div>
+      <h3>Basic Wash & Shine</h3>
+      <p>Quick exterior hand wash, dry, and tire dressing. Perfect for a fast refresh.</p>
+      <div class="service-price">Starting at $40</div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="section-tag">What people say</div>
+  <div class="section-title">Real Reviews</div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"You guys are amazing! My car looks incredible! Freylin was very detail oriented. Excellent service from the start."</div>
+      <div class="reviewer">Dayanara Santos</div>
+      <div class="reviewer-sub">1 month ago</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Got my used car detailed by Jason — interior, exterior, engine bay, even the headlights. Now it looks brand new again. Worth every penny."</div>
+      <div class="reviewer">Frank Luis-Ravelo</div>
+      <div class="reviewer-sub">Local Guide · 4 months ago</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Incredible attention to every detail, leaving my car looking brand new inside and out. Professional and faster than expected!"</div>
+      <div class="reviewer">Marvin Felix</div>
+      <div class="reviewer-sub">1 year ago</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <h2>Ready To Book?</h2>
+  <p>Give us a call or stop by. We're open Monday through Saturday.</p>
+  <a href="tel:9788729072" class="btn-blue" style="font-size:16px;padding:16px 40px;">📞 (978) 872-9072</a>
+  <div class="cta-info">
+    <div class="cta-info-item">📍 79 Brook St, Lawrence, MA 01841</div>
+    <div class="cta-info-item">🕐 Open · Closes 5 PM</div>
+    <div class="cta-info-item">⭐ 5.0 on Google</div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 BUBBLE Auto Detailing & Car Wash · Lawrence, MA</div>
+  <div>79 Brook St · <a href="tel:9788729072">(978) 872-9072</a></div>
+</footer>
+
+</body>
+</html>
